@@ -17,7 +17,7 @@ export abstract class FactoryRouteController<T extends IBasicController> {
   public constructor(controller: T) {
     this.router = Router();
     this.controller = controller;
-    this.routeName = `${Configuration.getConfig().server.GLOBAL_URL_PREFIX}/${controller.routeName}`;
+    this.routeName = `${Configuration.getInstance().getConfig().server.GLOBAL_URL_PREFIX}/${controller.routeName}`;
     this.initMiddlewares();
     this.initRoutes();
   }

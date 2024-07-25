@@ -1,7 +1,9 @@
 import {DataSource} from 'typeorm';
 import {Question} from '../api/question/question.repository';
-import {generateSearchIndex, installExtensions, preloadDB} from './seeder';
-import Configuration from '../config/config';
+import ConfigService from '../config/config';
+import {PostgresConnectionProperties} from 'config/config.types';
+import {generateSearchIndex, installExtensions} from './postgresHelpers';
+import QuestionSeeder from './seeders/QuestionSeeder';
 
 /** ========================================================
  *
@@ -10,7 +12,6 @@ import Configuration from '../config/config';
  ======================================================== */
 class PostgresDatasource {
   // PROPERTIES
-  private DatabaseConfig = Configuration.getConfig().database.postgres;
   private AppDataSource: DataSource;
 
   // CTOR
@@ -19,23 +20,32 @@ class PostgresDatasource {
   }
 
   // METHODS
-  public async initialize(mustPreload?: boolean) {
-    const ds = await this.AppDataSource.initialize();
-    await installExtensions(ds);
-    await generateSearchIndex(ds, 'questions');
-    if (mustPreload) {
-      await preloadDB();
+  public async initialize() {
+    try {
+      const ds = await this.AppDataSource.initialize();
+
+      await installExtensions(ds);
+      await generateSearchIndex(ds, 'questions');
+
+      if (ConfigService.getInstance().getConfig().server.SEED) {
+        QuestionSeeder.seedData();
+      }
+    } catch (error) {
+      console.error('Error during database initialization:', error);
+      throw error;
     }
   }
 
   private initConfig(): DataSource {
+    const databaseConfig = ConfigService.getInstance().getConfig().database.postgres as PostgresConnectionProperties;
+
     return new DataSource({
       type: 'postgres',
-      host: this.DatabaseConfig?.HOST,
-      port: this.DatabaseConfig?.PORT,
-      database: this.DatabaseConfig?.DATABASE,
-      username: this.DatabaseConfig?.USERNAME,
-      password: this.DatabaseConfig?.PASSWORD,
+      host: databaseConfig.HOST,
+      port: databaseConfig.PORT,
+      database: databaseConfig.DATABASE,
+      username: databaseConfig.USERNAME,
+      password: databaseConfig.PASSWORD && databaseConfig.PASSWORD.length > 0 ? databaseConfig.PASSWORD : ' ',
       synchronize: true,
       migrationsRun: true,
       dropSchema: true,

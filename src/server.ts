@@ -1,24 +1,27 @@
 import express from 'express';
-import PostgresDatasource from './datasources/postgres';
 import cors from 'cors';
 import * as expressWinston from 'express-winston';
-import {Logger} from './services/Logger.service';
+import {Logger} from './services/Logger/Logger.service';
 import {errorHandler} from './middlewares/ErrorHandler.middleware';
-import {getPackageInfo, getRunningHostAndPort, listObjectProperties} from './helpers/ServerMessages.util';
+import ConfigService from './config/config';
+import PostgresDatasource from './datasources/postgres';
 import questionRoutes from './api/question/question.routes';
 import queryRoutes from './api/query/query.routes';
-import Configuration from './config/config';
+import {getPackageInfo, getRunningHostAndPort, listObjectProperties} from './helpers/ServerMessages.util';
 
 class App {
   // PROPERTIES
   private server: express.Application;
   private loggerInstance = Logger.getInstance();
-  private defaultConfig = Configuration.getConfig();
+  private configService: ConfigService;
 
   // CTOR
   constructor() {
     // Create a new express app
     this.server = express();
+
+    // get global configuration
+    this.configService = ConfigService.getInstance();
 
     // initializations
     this.initConfiguration();
@@ -54,30 +57,29 @@ class App {
    * sets the express server configurations
    */
   private initConfiguration() {
-    this.server.set('host', this.defaultConfig.server.HOST);
-    this.server.set('port', this.defaultConfig.server.PORT);
+    this.server.set('host', this.configService.getConfig().server.HOST);
+    this.server.set('port', this.configService.getConfig().server.PORT);
     this.server.disable('x-powered-by');
   }
 
   private showServerUpMessages() {
-    this.loggerInstance.logger.debug(`server .env variables: \n${listObjectProperties(this.defaultConfig)}`);
-
+    this.loggerInstance.logger.debug(`Server .env variables: \n${listObjectProperties(this.configService.getConfig())}`);
     this.loggerInstance.logger.info(`${getPackageInfo()} ${getRunningHostAndPort(this.server.get('host'), this.server.get('port'))}`);
   }
 
   private initDB() {
-    PostgresDatasource.initialize(this.defaultConfig.server.NODE_ENV === 'development');
+    PostgresDatasource.initialize();
   }
 
   /**
    * starts the express server
    */
-  public initServer() {
-    this.server.listen(this.server.get('port'), () => {
+  public startServer() {
+    const port = this.server.get('port');
+    this.server.listen(port, () => {
       this.showServerUpMessages();
     });
   }
-
 }
 
 export default new App();
