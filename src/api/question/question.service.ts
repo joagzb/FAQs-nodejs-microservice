@@ -59,7 +59,7 @@ export class QuestionService implements IBasicService {
     });
 
     // update question
-    question.active = body.active || question.active;
+    question.active = body.active !== undefined ? body.active : question.active;
     question.text = body.text || question.text;
     question.answer = body.answer || question.answer;
     question.textWithoutSymbols = body.text ? cleanUpQuestion(body.text) : question.textWithoutSymbols;
