@@ -7,7 +7,7 @@ import {IDataSeeder} from './IDataSeeder';
 
 /** ========================================================
  *
- * Question and aswers Seeder
+ * Question and answers Seeder
  *
  ======================================================== */
 class QuestionSeeder implements IDataSeeder {
