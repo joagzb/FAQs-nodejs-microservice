@@ -1,8 +1,8 @@
 # FAQ Service
 
-This project is a backend service designed to leverage full-text search algorithms to find suitable answers among frequently asked questions (FAQs). The service is built to integrate with a chatbot and cache the most frequently asked questions to improve response times and accuracy.
+This project is a backend service that leverages PostgreSQL full-text search to find the most relevant answers to frequently asked questions (FAQs). It exposes a REST API suitable for chatbot integration and includes a small in-memory cache to speed up repeated queries.
 
-## Pre-requirements 📋
+## Prerequisites 📋
 
 Before starting, ensure you have the following tools installed:
 
@@ -12,7 +12,7 @@ Before starting, ensure you have the following tools installed:
 
 ## Installation and Deployment 🔧📦
 
-_At the root of the project, create a `.env` file that contains the environment variables as shown in the `.env.example`._
+At the root of the project, create a `.env` file based on `.env.example` and provide the values for your PostgreSQL instance and server port.
 
 _Ensure you have an instance of PostgreSQL running locally with the following environment variables:_
 
@@ -20,14 +20,13 @@ _Ensure you have an instance of PostgreSQL running locally with the following en
 
 1. **Local Development:**
 
-   - Clone the repository and navigate to the project directory.
-   - Create a `.env` file based on `.env.example` with necessary environment variables.
-   - Install dependencies and start the server:
-
-     ```bash
-     npm install
-     npm start
-     ```
+   ```bash
+   git clone <repo-url>
+   cd FAQs-nodejs-microservice
+   cp .env.example .env
+   npm install
+   npm start
+   ```
 
 2. **Using Docker:**
 
@@ -64,4 +63,4 @@ The server will be available at [http://localhost:3000](http://localhost:3000).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](./LICENSE) file for details.
