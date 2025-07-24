@@ -14,7 +14,7 @@ class QuestionSeeder implements IDataSeeder {
   private endpoint: string;
 
   // CTOR
-  constructor () {
+  constructor() {
     const serverConfig = ConfigService.getInstance().getConfig().server;
     this.endpoint = `http://${serverConfig.HOST}:${serverConfig.PORT}${serverConfig.GLOBAL_URL_PREFIX}/questions`;
   }
@@ -39,9 +39,9 @@ class QuestionSeeder implements IDataSeeder {
   }
 
   /**
- * Reads questions from a JSON file.
- * @returns An array of QuestionDTO objects, or an empty array if the file does not exist.
- */
+   * Reads questions from a JSON file.
+   * @returns An array of QuestionDTO objects, or an empty array if the file does not exist.
+   */
   private readQuestionsFromFile(): QuestionDTO[] {
     const filePath = path.resolve(__dirname, '../../../src/datasources/seeders/questions.json');
 

@@ -1,4 +1,4 @@
-import {NextFunction, Response} from 'express';
+import {Response} from 'express';
 
 /**
   @description handles a HTTP error on request.

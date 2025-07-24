@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import {Question} from './question.repository';
 import {IBasicController} from '../shared/controllers/IBasicController.interface';
 import {QuestionService} from './question.service';
 
