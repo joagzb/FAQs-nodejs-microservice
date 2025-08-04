@@ -32,6 +32,7 @@ RUN npm install --production
 # Expose the port your app runs on
 ENV NODE_ENV production
 ENV PORT 3000
+ENV HOST 0.0.0.0
 EXPOSE $PORT
 
 # Command to run the application

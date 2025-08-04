@@ -8,47 +8,50 @@ Before starting, ensure you have the following tools installed:
 
 - [Node.js](https://nodejs.org/) - JavaScript runtime
 - [Docker](https://www.docker.com/) - Containerization platform
+- [Docker Compose](https://docs.docker.com/compose/) - Orchestration for multi-container Docker applications
 - [PostgreSQL](https://www.postgresql.org) - Relational Database
 
 ## Installation and Deployment 🔧📦
 
-At the root of the project, create a `.env` file based on `.env.example` and provide the values for your PostgreSQL instance and server port.
+At the root of the project copy the example files and adjust the environment values to your needs:
 
-_Ensure you have an instance of PostgreSQL running locally with the following environment variables:_
+```bash
+cp .env.example .env
+cp docker-compose.example.yml docker-compose.yml
+```
 
-- `POSTGRES_HOST`: Set to `db` if running with Docker Compose, `localhost` if running locally, or `host.docker.internal` if running Docker locally.
+_Ensure you have an instance of PostgreSQL running or let Docker Compose start one for you. Key variables include:_
 
-1. **Local Development:**
+- `POSTGRES_HOST`: `db` when using Docker Compose, `localhost` for local execution, or `host.docker.internal` when running the container directly.
+
+1. **Local Development (npm):**
 
    ```bash
    git clone <repo-url>
    cd FAQs-nodejs-microservice
-   cp .env.example .env
    npm install
    npm start
    ```
 
 2. **Using Docker:**
 
-   - Build and run the Docker image:
+   - Build the image:
 
      ```bash
      docker build -t my-node-app-name .
      ```
 
-   - Run the Docker image:
+   - Run the container (passes environment from `.env`):
 
      ```bash
-     docker run -p 3000:3000 my-node-app-name
+     docker run --env-file .env -p 3000:3000 my-node-app-name
      ```
 
-3. **Using Docker Compose:**
+3. **Using Docker Compose (recommended):**
 
-   - Start the Docker Compose services:
-
-     ```bash
-     docker-compose up --build
-     ```
+   ```bash
+   docker-compose up --build
+   ```
 
 The server will be available at [http://localhost:3000](http://localhost:3000).
 
