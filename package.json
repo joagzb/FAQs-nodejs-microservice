@@ -43,17 +43,16 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.23",
     "@types/jest": "^29.5.14",
-    "@types/node": "^18.19.120",
+    "@types/node": "^18.19.121",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^9.31.0",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.10.2",
     "prettier": "2.7.1",
     "source-map-support": "^0.5.21",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "tsc-watch": "^5.0.3",
-    "typescript": "^4.9.5",
-    "typescript-eslint": "^8.38.0"
+    "typescript": "^4.9.5"
   }
 }
