@@ -49,9 +49,9 @@ _Ensure you have an instance of PostgreSQL running or let Docker Compose start o
 
 3. **Using Docker Compose (recommended):**
 
-  ```bash
-  docker-compose up --build
-  ```
+```bash
+docker-compose up --build
+```
 
 The server will be available at [http://localhost:3000](http://localhost:3000).
 

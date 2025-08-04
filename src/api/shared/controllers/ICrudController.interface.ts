@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import {IBasicController} from './IBasicController.interface';
 
+/* eslint-disable no-unused-vars */
 export interface ICrudController extends IBasicController {
   getById(req: Request, res: Response): Promise<Response>;
   getAll(req: Request, res: Response): Promise<Response>;
