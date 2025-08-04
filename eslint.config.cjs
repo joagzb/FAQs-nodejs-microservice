@@ -1,8 +1,9 @@
-// eslint.config.js
-import plugin from '@typescript-eslint/eslint-plugin';
-import parser from '@typescript-eslint/parser';
+// eslint.config.cjs
+const plugin = require('@typescript-eslint/eslint-plugin');
+const parser = require('@typescript-eslint/parser');
 
-export default [
+/** @type {import('eslint').Linter.FlatConfig[]} */
+module.exports = [
   {
     files: ['**/*.ts'],
     ignores: ['src/**/*.test.ts'],

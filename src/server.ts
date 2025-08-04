@@ -5,6 +5,7 @@ import {Logger} from './services/Logger/Logger.service';
 import {errorHandler} from './middlewares/ErrorHandler.middleware';
 import ConfigService from './config/config';
 import PostgresDatasource from './datasources/postgres';
+import healthRoutes from './api/health/health.routes';
 import questionRoutes from './api/question/question.routes';
 import queryRoutes from './api/query/query.routes';
 import {getPackageInfo, getRunningHostAndPort, listObjectProperties} from './helpers/ServerMessages.util';
@@ -35,6 +36,7 @@ class App {
    * configures and mount the routes for the express app
    */
   private initRoutes(): void {
+    this.server.use(healthRoutes.routeName, healthRoutes.router);
     this.server.use(questionRoutes.routeName, questionRoutes.router);
     this.server.use(queryRoutes.routeName, queryRoutes.router);
   }
