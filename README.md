@@ -1,57 +1,65 @@
 # FAQ Service
 
-This project is a backend service designed to leverage full-text search algorithms to find suitable answers among frequently asked questions (FAQs). The service is built to integrate with a chatbot and cache the most frequently asked questions to improve response times and accuracy.
+This project is a backend service that leverages PostgreSQL full-text search to find the most relevant answers to frequently asked questions (FAQs). It exposes a REST API suitable for chatbot integration and includes a small in-memory cache to speed up repeated queries.
 
-## Pre-requirements 📋
+## Prerequisites 📋
 
 Before starting, ensure you have the following tools installed:
 
 - [Node.js](https://nodejs.org/) - JavaScript runtime
 - [Docker](https://www.docker.com/) - Containerization platform
+- [Docker Compose](https://docs.docker.com/compose/) - Orchestration for multi-container Docker applications
 - [PostgreSQL](https://www.postgresql.org) - Relational Database
 
 ## Installation and Deployment 🔧📦
 
-_At the root of the project, create a `.env` file that contains the environment variables as shown in the `.env.example`._
+At the root of the project copy the example files and adjust the environment values to your needs:
 
-_Ensure you have an instance of PostgreSQL running locally with the following environment variables:_
+```bash
+cp .env.example .env
+cp docker-compose.example.yml docker-compose.yml
+```
 
-- `POSTGRES_HOST`: Set to `db` if running with Docker Compose, `localhost` if running locally, or `host.docker.internal` if running Docker locally.
+_Ensure you have an instance of PostgreSQL running or let Docker Compose start one for you. Key variables include:_
 
-1. **Local Development:**
+- `POSTGRES_HOST`: `db` when using Docker Compose, `localhost` for local execution, or `host.docker.internal` when running the container directly.
 
-   - Clone the repository and navigate to the project directory.
-   - Create a `.env` file based on `.env.example` with necessary environment variables.
-   - Install dependencies and start the server:
+1. **Local Development (npm):**
 
-     ```bash
-     npm install
-     npm start
-     ```
+   ```bash
+   git clone <repo-url>
+   cd FAQs-nodejs-microservice
+   npm install
+   npm start
+   ```
 
 2. **Using Docker:**
 
-   - Build and run the Docker image:
+   - Build the image:
 
      ```bash
      docker build -t my-node-app-name .
      ```
 
-   - Run the Docker image:
+   - Run the container (passes environment from `.env`):
 
      ```bash
-     docker run -p 3000:3000 my-node-app-name
+     docker run --env-file .env -p 3000:3000 my-node-app-name
      ```
 
-3. **Using Docker Compose:**
+3. **Using Docker Compose (recommended):**
 
-   - Start the Docker Compose services:
-
-     ```bash
-     docker-compose up --build
-     ```
+```bash
+docker-compose up --build
+```
 
 The server will be available at [http://localhost:3000](http://localhost:3000).
+
+You can verify the service is running with the health check endpoint:
+
+```bash
+curl http://localhost:3000/api/v1/faqs/health/ping
+```
 
 ## built using 🛠️
 
@@ -64,4 +72,4 @@ The server will be available at [http://localhost:3000](http://localhost:3000).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](./LICENSE) file for details.

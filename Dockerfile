@@ -1,5 +1,5 @@
 # Use the official Node.js image as the build environment
-FROM node:16-slim AS builder
+FROM node:20-slim AS builder
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Use a smaller Node.js image for the runtime environment
-FROM node:16-slim
+FROM node:20-slim
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -27,12 +27,7 @@ COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package*.json ./
 
 # Install only production dependencies
-RUN npm install --production
-
-# Expose the port your app runs on
-ENV NODE_ENV production
-ENV PORT 3000
-EXPOSE $PORT
+RUN npm install
 
 # Command to run the application
 CMD ["node", "dist/index.js"]

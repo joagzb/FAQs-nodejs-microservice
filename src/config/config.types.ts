@@ -48,6 +48,7 @@ export type environments = 'development' | 'production';
  * database configurations models
  *
  ======================================================== */
+/* eslint-disable no-unused-vars */
 type datasources = 'redis' | 'postgres' | 'mysql' | 'mongodb';
 
 interface DBConnectionProperties {
