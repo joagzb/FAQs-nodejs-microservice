@@ -49,11 +49,17 @@ _Ensure you have an instance of PostgreSQL running or let Docker Compose start o
 
 3. **Using Docker Compose (recommended):**
 
-   ```bash
-   docker-compose up --build
-   ```
+```bash
+docker-compose up --build
+```
 
 The server will be available at [http://localhost:3000](http://localhost:3000).
+
+You can verify the service is running with the health check endpoint:
+
+```bash
+curl http://localhost:3000/api/v1/faqs/health/ping
+```
 
 ## built using 🛠️
 

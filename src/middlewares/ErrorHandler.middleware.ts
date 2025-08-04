@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from 'express';
 import {HttpErrorHandler} from '../helpers/HTTPErrorHandler.util';
 import {Logger} from '../services/Logger/Logger.service';
 
+/* eslint-disable no-unused-vars */
 /**
  * @description Middleware to intercept all HTTP error requests.
  * @param err Caught error
