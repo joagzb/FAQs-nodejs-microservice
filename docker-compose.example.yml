@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: example_db
+      POSTGRES_USER: example_user
+      POSTGRES_PASSWORD: example_password
+    ports:
+      - '5432:5432'
+    networks:
+      - app-network
+
+  app:
+    image: msfaqs
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: 3000
+      URL_PREFIX: /api/v1/faqs
+      SEED: 'false'
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: example_user
+      POSTGRES_PASSWORD: example_password
+      POSTGRES_DATABASE: example_db
+      POSTGRES_SCHEMA: public
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
